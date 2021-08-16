@@ -1,15 +1,15 @@
 <template>
   <div v-if="!pokemon">
-      <h1>Wait a moment please...</h1>
+    <h1>Wait a moment please...</h1>
   </div>
   <div v-else>
     <h1>Recognize the Pokemon</h1>
-    <PokemonImg :img-id="pokemon.id" 
-        :show-pokemon="showPokemon">
-    </PokemonImg>
-    <AnswersList :pokemons="pokemons" 
-        @selection-pokemon="checkPokemon($event)">
+    <PokemonImg :img-id="pokemon.id" :show-pokemon="showPokemon"> </PokemonImg>
+    <AnswersList :pokemons="pokemons" @selection-pokemon="checkPokemon($event)">
     </AnswersList>
+    <template v-if="showMessage">
+      <h3>{{ message }}</h3>
+    </template>
   </div>
 </template>
 
@@ -26,18 +26,36 @@ export default {
     return {
       pokemons: [],
       pokemon: null,
-      showPokemon: false
+      showPokemon: false,
+      message: "",
+      showMessage: false,
     };
   },
   methods: {
     async pokemonsList() {
-      this.pokemons = await getPokemonOptions();
-      const rndInt = Math.floor(Math.random() * 4);
-      this.pokemon = this.pokemons[rndInt];
+      this.pokemons = await getPokemonOptions()
+      const rndInt = Math.floor(Math.random() * 4)
+      this.pokemon = this.pokemons[rndInt]
     },
     checkPokemon(pokemonId) {
-        this.showPokemon = (pokemonId === this.pokemon.id) ? true : false
-    }
+      if (pokemonId === this.pokemon.id) {
+        this.showPokemon = true
+        this.message = "Well Done, you have a point!"
+        this.showMessage = true
+        this.nextPokemon()
+      } else {
+        this.message = "Wrong, try again..."
+        this.showMessage = true
+      }
+    },
+    nextPokemon() {
+      setTimeout(() => {
+        this.pokemon = null
+        this.showMessage = false
+        this.showPokemon = false
+        this.pokemonsList()
+      }, 3000)
+    },
   },
   components: {
     AnswersList,
@@ -45,7 +63,7 @@ export default {
   },
   // LifeCycle
   mounted() {
-    this.pokemonsList();
+    this.pokemonsList()
   },
 };
 </script>
