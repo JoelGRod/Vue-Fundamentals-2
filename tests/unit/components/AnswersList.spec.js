@@ -3,7 +3,7 @@ import AnswersList from "@/components/AnswersList";
 import { pokemonsList } from "../mocks/pokemons.mock";
 
 describe("AnswersList Component", () => {
-    
+
   let wrapper;
 
   beforeEach(() => {
@@ -12,6 +12,8 @@ describe("AnswersList Component", () => {
         pokemons: pokemonsList
       }
     });
+
+    jest.clearAllMocks();
   });
 
   test("should match the snapshot", () => {
