@@ -1,4 +1,5 @@
 import getPokemonOptions, { getPokemons, getPokemonNames } from "@/helpers/getPokemonOptions";
+import { pokemonsList } from "../mocks/pokemons.mock";
 
 describe('getPokemonOptions helpers', () => {
 
@@ -17,12 +18,7 @@ describe('getPokemonOptions helpers', () => {
         // Arrange
         const pokemons = await getPokemonNames([1,2,3,4]);
         // Act
-        const expectedPokemons = [
-            { id: 1, name: 'bulbasaur' },
-            { id: 2, name: 'ivysaur' },
-            { id: 3, name: 'venusaur' },
-            { id: 4, name: 'charmander' } 
-        ];
+        const expectedPokemons = pokemonsList;
         // Assert
         expect(pokemons).toStrictEqual(expectedPokemons);
     });
