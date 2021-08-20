@@ -13,14 +13,16 @@ export default async () => {
 
 }
 
-const getPokemons = () => {
+// We put an export here because tests, don't put in future
+export const getPokemons = () => {
 
     const pokemonsList = Array.from( Array( 650 ) );
     return pokemonsList.map(( element, index ) => index + 1)
 
 }
 
-const getPokemonNames = async ( pokemonIdList ) => {
+// We put an export here because tests, don't put in future
+export const getPokemonNames = async ( pokemonIdList ) => {
 
     try {
         const pokemonPromises = pokemonIdList.map( id => pokeApi.get(`/${ id }`) );
